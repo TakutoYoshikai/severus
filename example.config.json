@@ -1,0 +1,6 @@
+{
+  "rpcHost": "https://matic-mumbai.chainstacklabs.com",
+  "contractAddress": "0x0b61a49F46D2C1100a7177F630230c59603c14C6",
+  "privateKey": "",
+  "port": 3000
+}
