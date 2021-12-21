@@ -20,12 +20,11 @@ severus-server ./config.json
 ```
 
 **initialize private key**
-
-private key is related to one directory.
 ```bash
 severus init
 # $HOME/.silver/secret/private-key.txt is generated. 
 # You can access the data by using this private-key.txt
+# A private key is related to one directory.
 ```
 
 **regenerate private key**
