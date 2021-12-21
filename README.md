@@ -15,7 +15,7 @@ npm install --save TakutoYoshikai/severus
 **saving data needs to run server for writing data to blockchain.**
 ```bash
 cp example.config.json config.json
-# Edit config.json
+# enter a contract address and your private key for writing on Polygon Mumbai Network by editing config.json
 severus-server ./config.json
 ```
 
