@@ -19,7 +19,7 @@ cp example.config.json config.json
 severus-server ./config.json
 ```
 
-**init**
+**initialize private key(data key)**
 ```bash
 severus init
 # $HOME/.silver/secret/private-key.txt is generated. 
