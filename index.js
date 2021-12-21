@@ -45,7 +45,7 @@ function createSilverKey() {
 }
 
 function getSilverKey() {
-  return fs.readFileSync(SILVER_KEY_PATH, "utf8") + contractAddress;
+  return fs.readFileSync(SILVER_KEY_PATH, "utf8").trim() + contractAddress;
 }
 function getPolygonPrivateKey() {
   const silverKey = getSilverKey();
