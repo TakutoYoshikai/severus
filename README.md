@@ -9,21 +9,28 @@ severus is a tool for encryption data and saving the encrypted data into P2P net
 ### Usage
 **install**
 ```bash
-npm install --save TakutoYoshikai/severus
+npm install -g TakutoYoshikai/severus
 ```
 
-**saving data needs to run server to writing data to blockchain.**
+**saving data needs to run server for writing data to blockchain.**
 ```bash
 cp example.config.json config.json
-# Edit config.json
+# enter a contract address and your private key for writing on Polygon Mumbai Network by editing config.json
 severus-server ./config.json
 ```
 
-**init**
+**initialize private key**
 ```bash
 severus init
 # $HOME/.silver/secret/private-key.txt is generated. 
 # You can access the data by using this private-key.txt
+# A private key is related to one directory.
+```
+
+**regenerate private key**
+```bash
+rm $HOME/.silver/secret/private-key.txt
+severus init
 ```
 
 **save**
