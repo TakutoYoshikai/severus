@@ -9,7 +9,7 @@ severus is a tool for encryption data and saving the encrypted data into P2P net
 ### Usage
 **install**
 ```bash
-npm install --save TakutoYoshikai/severus
+npm install -g TakutoYoshikai/severus
 ```
 
 **saving data needs to run server for writing data to blockchain.**
