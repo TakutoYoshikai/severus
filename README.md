@@ -24,11 +24,6 @@ severus-server ./config.json
 severus init
 ```
 
-**run server for writing to blockchain**
-```bash
-severus-server /path/to/config.json
-```
-
 **save**
 ```bash
 severus save <DIRECTORY TO SAVE>
