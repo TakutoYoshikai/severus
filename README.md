@@ -22,6 +22,8 @@ severus-server ./config.json
 **init**
 ```bash
 severus init
+# $HOME/.silver/secret/private-key.txt is generated. 
+# You can access the data by using this private-key.txt
 ```
 
 **save**
