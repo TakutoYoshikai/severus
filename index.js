@@ -265,6 +265,7 @@ if (require.main === module) {
     restore,
     polygonSave,
     polygonGet,
+    Client,
   }
 }
 
