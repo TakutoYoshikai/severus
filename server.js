@@ -41,4 +41,9 @@ app.post("/backup", (req, res) => {
   });
 });
 
-app.listen(config.port);
+
+if (require.main === module) {
+  app.listen(config.port);
+} else {
+  module.exports = app;
+}

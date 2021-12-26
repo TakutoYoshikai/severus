@@ -252,6 +252,8 @@ async function main() {
 if (require.main === module) {
   main();
 } else {
+  const Writer = require("./write");
+  const app = require("./server");
   module.exports = {
     createSilverKey,
     getSilverKey,
@@ -266,6 +268,8 @@ if (require.main === module) {
     polygonSave,
     polygonGet,
     Client,
+    Writer,
+    app,
   }
 }
 
