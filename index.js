@@ -77,7 +77,7 @@ function readdirRecursively (dir, files = []) {
 async function fetchFile(ipfsHash, outputFile) {
   const url = ipfsGateway + "/" + ipfsHash;
   const response = await axios.get(url, { responseType: "arraybuffer" });
-  return response.data;
+  fs.writeFileSync(outputFile, response.data);
 }
 
 async function uploadFile(targetFile) {
