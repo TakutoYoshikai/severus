@@ -11,6 +11,10 @@ const contractAddress = "0x799358B503325af18FCBF9DE723393Ce76B1bfAF";
 const baseUrl = "http://localhost:3000";
 const rpcHost = "https://matic-mumbai.chainstacklabs.com";
 
+const ipfsGateway = "https://ipfs.infura.io/ipfs";
+
+const axios = require("axios");
+
 const mkdirp = require("mkdirp");
 const crypto = require("crypto");
 const fsExtra = require("fs-extra");
@@ -71,14 +75,9 @@ function readdirRecursively (dir, files = []) {
 };
 
 async function fetchFile(ipfsHash, outputFile) {
-  const response = await ipfsClient.get(ipfsHash);
-  for await (const data of response) {
-    let content = Buffer.alloc(0);
-    for await (const chunk of data.content) {
-      content = Buffer.concat([content, chunk]);
-    }
-    fs.writeFileSync(outputFile, content);
-  }
+  const url = ipfsGateway + "/" + ipfsHash;
+  const response = await axios.get(url, { responseType: "arraybuffer" });
+  return response.data;
 }
 
 async function uploadFile(targetFile) {
