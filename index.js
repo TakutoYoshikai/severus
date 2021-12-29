@@ -49,7 +49,9 @@ async function main() {
   } else if (args.mode === "init") {
     const silverSecretDir = path.join(userHome, ".silver", "secret");
     mkdirp(silverSecretDir);
-    fs.writeFileSync(silverKeyPath, randomString());
+    if (!fs.existsSync(silverKeyPath)) {
+      fs.writeFileSync(silverKeyPath, randomString());
+    }
   }
 }
 
