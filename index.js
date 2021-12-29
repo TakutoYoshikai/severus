@@ -70,7 +70,9 @@ async function main() {
   } else if (args.mode === "list") {
     const silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
     const list = await getBackups(silverKey);
-    console.info(list);
+    for (const d of list) {
+      console.log(d);
+    }
   } else if (args.mode === "share") {
     if (args.name) {
       console.error("name arg is not able to use with share.");
