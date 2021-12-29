@@ -12,13 +12,6 @@ severus is a tool for encryption data and saving the encrypted data into P2P net
 npm install -g TakutoYoshikai/severus
 ```
 
-**saving data needs to run server for writing data to blockchain.**
-```bash
-cp example.config.json config.json
-# enter a contract address and your private key for writing on Polygon Mumbai Network by editing config.json
-severus-server ./config.json
-```
-
 **initialize private key**
 ```bash
 severus init
@@ -34,6 +27,8 @@ severus init
 ```
 
 **save**
+You have to run [server](https://github.com/TakutoYoshikai/severus-server) before using save command.
+
 ```bash
 severus save <DIRECTORY TO SAVE>
 ```

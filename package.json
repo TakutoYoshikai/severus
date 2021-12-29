@@ -21,13 +21,13 @@
     "openssl-nodejs": "^1.0.5",
     "secp256k1": "^4.0.2",
     "seededrsa": "github:TakutoYoshikai/seededrsa",
+    "severus-lib": "github:TakutoYoshikai/severus-lib",
     "web3": "^1.6.1",
     "web3-eth-accounts": "^1.6.1",
     "web3-eth-contract": "^1.6.1",
     "web3-utils": "^1.6.1"
   },
   "bin": {
-    "severus": "./index.js",
-    "severus-server": "./server.js"
+    "severus": "./index.js"
   }
 }
