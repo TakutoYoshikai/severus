@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { share, backup, restore } = require("severus-lib");
+const { addBackup, getBackups, share, backup, restore } = require("severus-lib");
 
 const userHome = process.env[process.platform == "win32" ? "USERPROFILE" : "HOME"];
 const fs = require("fs");
@@ -18,7 +18,7 @@ async function main() {
     description: "severus is a tool for encryption data and saving the encrypted data into P2P network. severus uses Polygon Mumbai Network."
   });
 
-  parser.add_argument("mode", { help: "save | share | restore | init" });
+  parser.add_argument("mode", { help: "save | share | restore | init | list" });
   parser.add_argument("-d", "--dir", { help: "directory to save" });
   parser.add_argument("-n", "--name", { help: "directory name" });
 
@@ -38,8 +38,9 @@ async function main() {
     }
   } else if (args.mode === "save") {
     let silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
-    if (args.name) {
-      silverKey += args.name;
+    if (!args.name) {
+      console.error("save command needs name argument.");
+      return;
     }
     const dirPath = args.dir;
     const filePaths = allFiles(dirPath);
@@ -51,9 +52,14 @@ async function main() {
       }
     });
     try {
-      await backup(files, silverKey);
+      await backup(files, silverKey + args.name);
     } catch(err) {
       console.error("Failed to register the data.");
+    }
+    try {
+      await addBackup(args.name, silverKey);
+    } catch(err) {
+      console.error("Failed to update backup list.");
     }
   } else if (args.mode === "init") {
     const silverSecretDir = path.join(userHome, ".silver", "secret");
@@ -61,6 +67,10 @@ async function main() {
     if (!fs.existsSync(silverKeyPath)) {
       fs.writeFileSync(silverKeyPath, randomString());
     }
+  } else if (args.mode === "list") {
+    const silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
+    const list = await getBackups(silverKey);
+    console.info(list);
   } else if (args.mode === "share") {
     if (args.name) {
       console.error("name arg is not able to use with share.");
