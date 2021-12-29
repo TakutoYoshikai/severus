@@ -46,7 +46,11 @@ async function main() {
         content,
       }
     });
-    await backup(files, silverKey);
+    try {
+      await backup(files, silverKey);
+    } catch(err) {
+      console.error("Failed to register the data.");
+    }
   } else if (args.mode === "init") {
     const silverSecretDir = path.join(userHome, ".silver", "secret");
     mkdirp(silverSecretDir);
@@ -67,7 +71,11 @@ async function main() {
         content,
       }
     });
-    await share(files, silverKey);
+    try {
+      await share(files, silverKey);
+    } catch(err) {
+      console.error("Failed to register the data.");
+    }
   }
 }
 
