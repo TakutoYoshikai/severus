@@ -31,7 +31,7 @@ severus init
 You have to run [server](https://github.com/TakutoYoshikai/severus-server) before using save command.
 
 ```bash
-severus save -d <DIRECTORY TO SAVE>
+severus save -d <DIRECTORY TO SAVE> -n <DIRECTORY NAME>
 ```
 
 **share**
@@ -46,7 +46,12 @@ severus share -d <DIRECTORY TO SHARE>
 **restore**
 ```bash
 cd <DESTINATION DIR>
-severus restore
+severus restore -n <DIRECTORY NAME>
+```
+
+**list of data saved**
+```bash
+severus list
 ```
 
 ### License
