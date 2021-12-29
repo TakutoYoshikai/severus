@@ -27,6 +27,7 @@ severus init
 ```
 
 **save**
+
 You have to run [server](https://github.com/TakutoYoshikai/severus-server) before using save command.
 
 ```bash
@@ -34,6 +35,7 @@ severus save -d <DIRECTORY TO SAVE>
 ```
 
 **share**
+
 share command saves directory. It's not rewritable.
 You have to run [server](https://github.com/TakutoYoshikai/severus-server) before using share command.
 
