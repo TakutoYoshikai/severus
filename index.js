@@ -6,7 +6,6 @@ const userHome = process.env[process.platform == "win32" ? "USERPROFILE" : "HOME
 const fs = require("fs");
 const path = require("path");
 const silverKeyPath = path.join(userHome, ".silver", "secret", "private-key.txt");
-const silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
 const mkdirp = require("mkdirp");
 
 const { allFiles, randomString } = require("./util");
@@ -24,6 +23,7 @@ async function main() {
 
   const args = parser.parse_args();
   if (args.mode === "restore") {
+    const silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
     const files = await restore(silverKey);
     for (const file of files) {
       const p = path.resolve(path.join(process.cwd(), file.name));
@@ -33,6 +33,7 @@ async function main() {
       fs.writeFileSync(p, file.content);
     }
   } else if (args.mode === "save") {
+    const silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
     if (process.argv.length < 4) {
       return;
     }
