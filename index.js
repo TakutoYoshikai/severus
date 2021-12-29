@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { backup, restore } = require("severus-lib");
+const { share, backup, restore } = require("severus-lib");
 
 const userHome = process.env[process.platform == "win32" ? "USERPROFILE" : "HOME"];
 const fs = require("fs");
@@ -18,7 +18,7 @@ async function main() {
     description: "severus is a tool for encryption data and saving the encrypted data into P2P network. severus uses Polygon Mumbai Network."
   });
 
-  parser.add_argument("mode", { help: "save | restore | init" });
+  parser.add_argument("mode", { help: "save | share | restore | init" });
   parser.add_argument("-d", "--dir", { help: "directory to save" });
 
   const args = parser.parse_args();
@@ -53,6 +53,21 @@ async function main() {
     if (!fs.existsSync(silverKeyPath)) {
       fs.writeFileSync(silverKeyPath, randomString());
     }
+  } else if (args.mode === "share") {
+    const silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
+    if (process.argv.length < 4) {
+      return;
+    }
+    const dirPath = args.dir;
+    const filePaths = allFiles(dirPath);
+    const files = filePaths.map(filePath => {
+      const content = fs.readFileSync(filePath);
+      return {
+        name: filePath,
+        content,
+      }
+    });
+    await share(files, silverKey);
   }
 }
 
