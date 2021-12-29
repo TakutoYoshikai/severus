@@ -30,7 +30,7 @@ severus init
 You have to run [server](https://github.com/TakutoYoshikai/severus-server) before using save command.
 
 ```bash
-severus save <DIRECTORY TO SAVE>
+severus save -d <DIRECTORY TO SAVE>
 ```
 
 **restore**
