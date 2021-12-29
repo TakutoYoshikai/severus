@@ -33,6 +33,14 @@ You have to run [server](https://github.com/TakutoYoshikai/severus-server) befor
 severus save -d <DIRECTORY TO SAVE>
 ```
 
+**share**
+share command saves directory. It's not rewritable.
+You have to run [server](https://github.com/TakutoYoshikai/severus-server) before using share command.
+
+```bash
+severus share -d <DIRECTORY TO SHARE>
+```
+
 **restore**
 ```bash
 cd <DESTINATION DIR>
