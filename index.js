@@ -20,10 +20,14 @@ async function main() {
 
   parser.add_argument("mode", { help: "save | share | restore | init" });
   parser.add_argument("-d", "--dir", { help: "directory to save" });
+  parser.add_argument("-n", "--name", { help: "directory name" });
 
   const args = parser.parse_args();
   if (args.mode === "restore") {
-    const silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
+    let silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
+    if (args.name) {
+      silverKey += args.name;
+    }
     const files = await restore(silverKey);
     for (const file of files) {
       const p = path.resolve(path.join(process.cwd(), file.name));
@@ -33,9 +37,9 @@ async function main() {
       fs.writeFileSync(p, file.content);
     }
   } else if (args.mode === "save") {
-    const silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
-    if (process.argv.length < 4) {
-      return;
+    let silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
+    if (args.name) {
+      silverKey += args.name;
     }
     const dirPath = args.dir;
     const filePaths = allFiles(dirPath);
@@ -58,10 +62,11 @@ async function main() {
       fs.writeFileSync(silverKeyPath, randomString());
     }
   } else if (args.mode === "share") {
-    const silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
-    if (process.argv.length < 4) {
+    if (args.name) {
+      console.error("name arg is not able to use with share.");
       return;
     }
+    const silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
     const dirPath = args.dir;
     const filePaths = allFiles(dirPath);
     const files = filePaths.map(filePath => {
