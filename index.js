@@ -11,9 +11,19 @@ const mkdirp = require("mkdirp");
 
 const { allFiles, randomString } = require("./util");
 
+const { ArgumentParser } = require("argparse");
+
 
 async function main() {
-  if (process.argv[2] === "restore") {
+  const parser = new ArgumentParser({
+    description: "severus is a tool for encryption data and saving the encrypted data into P2P network. severus uses Polygon Mumbai Network."
+  });
+
+  parser.add_argument("mode", { help: "save | restore | init" });
+  parser.add_argument("-d", "--dir", { help: "directory to save" });
+
+  const args = parser.parse_args();
+  if (args.mode === "restore") {
     const files = await restore(silverKey);
     for (const file of files) {
       const p = path.resolve(path.join(process.cwd(), file.name));
@@ -22,11 +32,11 @@ async function main() {
       }
       fs.writeFileSync(p, file.content);
     }
-  } else if (process.argv[2] === "save") {
+  } else if (args.mode === "save") {
     if (process.argv.length < 4) {
       return;
     }
-    const dirPath = process.argv[3];
+    const dirPath = args.dir;
     const filePaths = allFiles(dirPath);
     const files = filePaths.map(filePath => {
       const content = fs.readFileSync(filePath);
@@ -36,7 +46,7 @@ async function main() {
       }
     });
     await backup(files, silverKey);
-  } else if (process.argv[2] === "init") {
+  } else if (args.mode === "init") {
     const silverSecretDir = path.join(userHome, ".silver", "secret");
     mkdirp(silverSecretDir);
     fs.writeFileSync(silverKeyPath, randomString());
