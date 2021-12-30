@@ -24,10 +24,6 @@ async function main() {
 
   const args = parser.parse_args();
   if (args.mode === "restore") {
-    if (!args.name) {
-      console.error("restore command needs name argument.");
-      return;
-    }
     let silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
     if (args.name) {
       silverKey += args.name;
