@@ -59,6 +59,7 @@ async function main() {
       await backup(files, silverKey + args.name);
     } catch(err) {
       console.error("Failed to register the data.");
+      return;
     }
     try {
       await addBackup(args.name, silverKey);
