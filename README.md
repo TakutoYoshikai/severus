@@ -46,6 +46,9 @@ severus share -d <DIRECTORY TO SHARE>
 **restore**
 ```bash
 cd <DESTINATION DIR>
+
+severus restore
+# or 
 severus restore -n <DIRECTORY NAME>
 ```
 
