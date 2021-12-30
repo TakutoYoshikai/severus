@@ -49,7 +49,9 @@ async function main() {
     let silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
     const dirPath = args.dir;
     const filePaths = allFiles(dirPath);
-    const files = filePaths.map(filePath => {
+    const files = filePaths.filter(filePath => {
+      return path.basename(filePath) !== ".DS_Store";
+    }).map(filePath => {
       const content = fs.readFileSync(filePath);
       return {
         name: filePath,
@@ -87,7 +89,9 @@ async function main() {
     const silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
     const dirPath = args.dir;
     const filePaths = allFiles(dirPath);
-    const files = filePaths.map(filePath => {
+    const files = filePaths.filter(filePath => {
+      return path.basename(filePath) !== ".DS_Store";
+    }).map(filePath => {
       const content = fs.readFileSync(filePath);
       return {
         name: filePath,
