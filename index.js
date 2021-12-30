@@ -38,6 +38,7 @@ async function main() {
       if (!p.startsWith(process.cwd())) {
         continue;
       }
+      await mkdirp(path.dirname(p));
       fs.writeFileSync(p, file.content);
     }
   } else if (args.mode === "save") {
@@ -68,7 +69,7 @@ async function main() {
     }
   } else if (args.mode === "init") {
     const silverSecretDir = path.join(userHome, ".silver", "secret");
-    mkdirp(silverSecretDir);
+    await mkdirp(silverSecretDir);
     if (!fs.existsSync(silverKeyPath)) {
       fs.writeFileSync(silverKeyPath, randomString());
     }
