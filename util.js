@@ -12,7 +12,10 @@ function randomString() {
   return s;
 }
 function allFiles(dirPath) {
-  return mapFilePathPair(glob.sync(path.join(dirPath, "**", "*")), dirPath);
+  return mapFilePathPair(glob.sync(path.join(dirPath, "**", "*")).filter(_path => {
+    const stats = fs.statSync(_path);
+    return !stats.isDirectory();
+  }), dirPath);
 }
 
 function removeSlash(filePath) {
