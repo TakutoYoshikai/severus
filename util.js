@@ -1,6 +1,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const glob = require("glob");
 
 function randomString() {
   const alphabets = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -10,37 +11,26 @@ function randomString() {
   }
   return s;
 }
-
-function readdirRecursively (dir, files = []) {
-  const paths = fs.readdirSync(dir);
-  const dirs = [];
-  for (const _path of paths) {
-    const stats = fs.statSync(path.join(dir, _path));
-    if (stats.isDirectory()) {
-      dirs.push(path.join(dir, _path));
-    } else {
-      files.push(path.join(dir, _path));
-    }
-  }
-  for (const d of dirs) {
-    files = readdirRecursively(d, files);
-  }
-  const resolvedDir = path.resolve(dir);
-  return files;
-};
-
 function allFiles(dirPath) {
-  if (dirPath.endsWith("/")) {
-    dirPath = dirPath.slice(0, -1);
+  return mapFilePathPair(glob.sync(path.join(dirPath, "**", "*")), dirPath);
+}
+
+function removeSlash(filePath) {
+  if (filePath.startsWith("/")) {
+    return filePath.slice(1);
   }
-  const resolvedDirPath = path.resolve(dirPath);
-  return readdirRecursively(dirPath).map(file => {
-    if (file.startsWith(resolvedDirPath)) {
-      return "." + file.slice(resolvedDirPath.length);
+  return filePath;
+}
+function mapFilePathPair(filePaths, dirPath) {
+  const absPath = path.resolve(dirPath);
+  return filePaths.map(filePath => {
+    return {
+      from: path.resolve(filePath),
+      pathToSave: removeSlash(path.resolve(filePath).replace(absPath, "")),
     }
-    return file;
   });
 }
+
 
 module.exports = {
   allFiles,

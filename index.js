@@ -54,11 +54,11 @@ async function main() {
     const dirPath = args.dir;
     const filePaths = allFiles(dirPath);
     const files = filePaths.filter(filePath => {
-      return path.basename(filePath) !== ".DS_Store";
+      return path.basename(filePath.from) !== ".DS_Store";
     }).map(filePath => {
-      const content = fs.readFileSync(filePath);
+      const content = fs.readFileSync(filePath.from);
       return {
-        name: filePath,
+        name: filePath.pathToSave,
         content,
       }
     });
@@ -98,11 +98,11 @@ async function main() {
     const dirPath = args.dir;
     const filePaths = allFiles(dirPath);
     const files = filePaths.filter(filePath => {
-      return path.basename(filePath) !== ".DS_Store";
+      return path.basename(filePath.from) !== ".DS_Store";
     }).map(filePath => {
-      const content = fs.readFileSync(filePath);
+      const content = fs.readFileSync(filePath.from);
       return {
-        name: filePath,
+        name: filePath.pathToSave,
         content,
       }
     });
