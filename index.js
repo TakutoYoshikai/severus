@@ -21,10 +21,16 @@ async function main() {
   parser.add_argument("mode", { help: "save | share | restore | init | list" });
   parser.add_argument("-d", "--dir", { help: "directory to save" });
   parser.add_argument("-n", "--name", { help: "directory name" });
+  parser.add_argument("-k", "--key", { help: "key file" });
 
   const args = parser.parse_args();
   if (args.mode === "restore") {
-    let silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
+    let silverKey;
+    if (args.key) {
+      silverKey = fs.readFileSync(args.key, "utf8").trim();
+    } else {
+      silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
+    }
     if (args.name) {
       silverKey += args.name;
     }
@@ -82,7 +88,11 @@ async function main() {
       console.error("name arg is not able to use with share.");
       return;
     }
-    const silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
+    if (!args.key) {
+      console.error("share command needs a key file.");
+      return;
+    }
+    const silverKey = fs.readFileSync(args.key, "utf8").trim();
     const dirPath = args.dir;
     const filePaths = allFiles(dirPath);
     const files = filePaths.filter(filePath => {
