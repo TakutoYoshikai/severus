@@ -24,7 +24,9 @@ async function main() {
   parser.add_argument("-k", "--key", { help: "key file" });
 
   const args = parser.parse_args();
-  if (args.mode === "restore") {
+  if (args.mode === "keygen") {
+    fs.writeFileSync("key.txt", randomString());
+  } else if (args.mode === "restore") {
     let silverKey;
     if (args.key) {
       silverKey = fs.readFileSync(args.key, "utf8").trim();

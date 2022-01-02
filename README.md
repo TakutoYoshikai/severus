@@ -26,6 +26,11 @@ rm $HOME/.silver/secret/private-key.txt
 severus init
 ```
 
+**generate a key file for sharing**
+```bash
+severus keygen
+```
+
 **save**
 
 You have to run [server](https://github.com/TakutoYoshikai/severus-server) before using save command.
