@@ -40,7 +40,7 @@ share command saves directory. It's not rewritable.
 You have to run [server](https://github.com/TakutoYoshikai/severus-server) before using share command.
 
 ```bash
-severus share -d <DIRECTORY TO SHARE>
+severus share -d <DIRECTORY TO SHARE> -k <KEY FILE>
 ```
 
 **restore**
@@ -50,6 +50,8 @@ cd <DESTINATION DIR>
 severus restore
 # or 
 severus restore -n <DIRECTORY NAME>
+# specify a key file
+severus restore -k <KEY FILE>
 ```
 
 **list of data saved**
