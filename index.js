@@ -47,7 +47,7 @@ async function main() {
     }
   } else if (args.mode === "save") {
     if (!args.name) {
-      console.error("save command needs name argument.");
+      throw new Error("save command needs name argument.");
       return;
     }
     let silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
@@ -65,13 +65,13 @@ async function main() {
     try {
       await backup(files, silverKey + args.name);
     } catch(err) {
-      console.error("Failed to register the data.");
+      throw new Error("Failed to register the data.");
       return;
     }
     try {
       await addBackup(args.name, silverKey);
     } catch(err) {
-      console.error("Failed to update backup list.");
+      throw new Error("Failed to update backup list.");
     }
   } else if (args.mode === "init") {
     const silverSecretDir = path.join(userHome, ".silver", "secret");
@@ -87,11 +87,11 @@ async function main() {
     }
   } else if (args.mode === "share") {
     if (args.name) {
-      console.error("name arg is not able to use with share.");
+      throw new Error("name arg is not able to use with share.");
       return;
     }
     if (!args.key) {
-      console.error("share command needs a key file.");
+      throw new Error("share command needs a key file.");
       return;
     }
     const silverKey = fs.readFileSync(args.key, "utf8").trim();
@@ -109,7 +109,7 @@ async function main() {
     try {
       await share(files, silverKey);
     } catch(err) {
-      console.error("Failed to register the data.");
+      throw new Error("Failed to register the data.");
     }
   }
 }
