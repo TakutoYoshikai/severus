@@ -2,7 +2,7 @@
 severus is a tool for encryption data and saving the encrypted data into P2P network. severus uses Polygon Mumbai Network.
 
 ### System Design
-<img src="./backup.png">
+<img src="./register.png">
 <img src="./restore.png">
 
 ### Requirements
