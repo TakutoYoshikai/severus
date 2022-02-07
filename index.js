@@ -1,10 +1,21 @@
 #!/usr/bin/env node
 
-const { addBackup, getBackups, share, backup, restore } = require("severus-lib");
-
-const userHome = process.env[process.platform == "win32" ? "USERPROFILE" : "HOME"];
+const Severus = require("severus-lib");
 const fs = require("fs");
+const userHome = process.env[process.platform == "win32" ? "USERPROFILE" : "HOME"];
 const path = require("path");
+
+let severus;
+try {
+  const configPath = path.join(userHome, ".severus-config.json");
+  fs.statSync(configPath);
+  const config = JSON.parse(fs.readFileSync(configPath, "utf8"));
+  severus = new Severus(config);
+} catch(err) {
+  severus = new Severus();
+}
+
+
 const silverKeyPath = path.join(userHome, ".silver", "secret", "private-key.txt");
 const mkdirp = require("mkdirp");
 
@@ -36,7 +47,7 @@ async function main() {
     if (args.name) {
       silverKey += args.name;
     }
-    const files = await restore(silverKey);
+    const files = await severus.restore(silverKey);
     for (const file of files) {
       const p = path.resolve(path.join(process.cwd(), file.name));
       if (!p.startsWith(process.cwd())) {
@@ -63,13 +74,13 @@ async function main() {
       }
     });
     try {
-      await backup(files, silverKey + args.name);
+      await severus.backup(files, silverKey + args.name);
     } catch(err) {
       throw new Error("Failed to register the data.");
       return;
     }
     try {
-      await addBackup(args.name, silverKey);
+      await severus.addBackup(args.name, silverKey);
     } catch(err) {
       throw new Error("Failed to update backup list.");
     }
@@ -81,7 +92,7 @@ async function main() {
     }
   } else if (args.mode === "list") {
     const silverKey = fs.readFileSync(silverKeyPath, "utf8").trim();
-    const list = await getBackups(silverKey);
+    const list = await severus.getBackups(silverKey);
     for (const d of list) {
       console.log(d);
     }
@@ -107,7 +118,7 @@ async function main() {
       }
     });
     try {
-      await share(files, silverKey);
+      await severus.share(files, silverKey);
     } catch(err) {
       throw new Error("Failed to register the data.");
     }
